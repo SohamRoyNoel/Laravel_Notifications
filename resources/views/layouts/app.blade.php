@@ -49,14 +49,37 @@
                         @else
                             <li>
                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre
-                                   href="#"><i class="fas fa-bell"></i>&nbsp;<span class="badge badge-light">{{auth()->user()->notifications->count()}}</span></a>
+                                   href="#"><i class="fas fa-bell"></i>&nbsp;<span class="badge badge-light">
+                                        @if(auth()->user()->unreadNotifications->count() != 0)
+                                            {{auth()->user()->unreadNotifications->count()}}
+                                            @endif
+
+                                    </span></a>
                                 <ul class="dropdown-menu">
-                                    @foreach(auth()->user()->notifications as $notification)
-                                            <li>
-                                                <a href="#">
-                                                      {{$notification->data['data']}}
-                                                </a>
-                                            </li>
+                                    {{--To show all notification--}}
+                                    {{--@foreach(auth()->user()->notifications as $notification)--}}
+                                            {{--<li>--}}
+                                                {{--<a href="#">--}}
+                                                      {{--{{$notification->data['data']}}--}}
+                                                {{--</a>--}}
+                                            {{--</li>--}}
+                                    {{--@endforeach--}}
+
+                                    {{--read and unread NOTIFICATIONS--}}
+                                    <li><a href="{{url('/markasread')}}">Mark All As Read</a> </li>
+                                    @foreach(auth()->user()->unreadNotifications as $notification)
+                                        <li style="background-color: #bce8f1">
+                                            <a href="#">
+                                                {{$notification->data['data']}}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                    @foreach(auth()->user()->readNotifications as $notification)
+                                        <li style="background-color: #cbb956">
+                                            <a href="#">
+                                                {{$notification->data['data']}}
+                                            </a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </li>

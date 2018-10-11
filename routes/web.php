@@ -4,12 +4,13 @@
 use App\Notifications\InvoicePaid;
 use App\User;
 
+// If you run index.php it generates a notification
 Route::get('/', function () {
     $when = now()->addSeconds(10);
     // use this when you need QUEUE + EMAIL + DATABASE notification
     // User::find(1)->notify((new InvoicePaid)->delay($when));
 
-    User::find(1)->notify(new InvoicePaid);
+    User::find(2)->notify(new InvoicePaid); // this thing decides who creates the notification as user with respect to ID
 
     // Facade for QUEUE + MAIL
     //    $users = User::find(1);
@@ -29,4 +30,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Running home will give you read & unread notification
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/markasread', function (){
+    auth()->user()->unreadNotifications->markAsRead(); // check documentation database notification : puts data @ read_at on NOTIFICATION table on DB
+    return redirect()->back();
+});
