@@ -79,7 +79,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel {{$user->name}}
+                    Laravel
+                    {{--For only when you need to send value through email--}}
+                    {{--{{$user->name}}--}}
                 </div>
 
                 <div class="links">

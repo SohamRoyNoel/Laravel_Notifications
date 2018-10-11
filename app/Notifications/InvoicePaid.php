@@ -14,14 +14,22 @@ class InvoicePaid extends Notification
 
     public $user;
 
-    public function __construct(User $user)
+    /*
+     * public function __construct(User $user)
     {
         $this->user = $user;
+    }*/
+
+    public function __construct()
+    {
+        //
     }
 
     public function via($notifiable)
     {
-        return ['mail'];
+        // return ['mail'];
+        // return ['mail', 'database'];
+        return ['database']; // for database notification
     }
 
     public function toMail($notifiable)
@@ -42,7 +50,7 @@ class InvoicePaid extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'data' => 'May be I am the perfect stranger'
         ];
     }
 }
